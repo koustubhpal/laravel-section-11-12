@@ -1,0 +1,73 @@
+NOTIFICATIONS
+-------------
+php artisan notifications:table
+
+php artisan migrate
+
+web.php
+-------
+
+Route::get('Notification','userNotificationscontroller@show'->middleware('auth'));
+
+php artisan make:controller userNotification
+
+<?php
+
+namespace App;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+class User extends Authenticatable
+{
+    use Notifiable;
+}
+
+use App\Notifications\InvoicePaid;
+
+$user->notify(new userNotification($invoice));
+
+Notification::send($users, new userNotification($invoice));
+
+public function via($notifiable)
+{
+    return $notifiable->prefers_sms ? ['nexmo'] : ['mail', 'database'];
+}
+
+
+SEND NOTIFICATION IN 5 MNT
+--------------------------
+
+through nexmo application
+-------------------------
+
+composer require laravel/slack-notification-channel
+
+'nexmo' => [
+    'sms_from' => '9831577401',
+],
+
+public function toNexmo($notifiable)
+{
+    return (new NexmoMessage)
+                ->content('HI,thanku');
+}
+
+
+
+
+EVENTS
+------
+php artisan event:list
+php artisan make:event Ptoduct Purchase
+php artisan make:listner Award Achivement
+php artisan make:listner send sahreable coupen -e ProductPurchased
+
+public function handle(ProductPurchased $event)
+{
+var_dump('send sharable coupen')
+}
+php artisan make:listner DootherTHing -e Product Purchased
+
+
+
